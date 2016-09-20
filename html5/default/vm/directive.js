@@ -254,7 +254,7 @@ function bindEvents (vm, el, events) {
         console.debug(`[JS Framework] The method "${handler}" is not defined.`)
       }
     }
-    var realVm = vm._realParent?vm._realParent:vm;
+    const realVm = vm._realParent?vm._realParent:vm;
     setEvent(realVm, el, key, handler)
   }
 }
