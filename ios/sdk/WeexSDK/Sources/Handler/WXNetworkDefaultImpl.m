@@ -7,6 +7,7 @@
  */
 
 #import "WXNetworkDefaultImpl.h"
+#import "WXAppConfiguration.h"
 
 @interface WXNetworkCallbackInfo : NSObject
 
@@ -41,10 +42,9 @@
     
     if (!_session) {
         NSURLSessionConfiguration *urlSessionConfig = [NSURLSessionConfiguration defaultSessionConfiguration];
-        Class windVaneProtocol = NSClassFromString(@"WVURLProtocol");
-        if (windVaneProtocol) {
+        if ([WXAppConfiguration customizeProtocolClasses] && [WXAppConfiguration customizeProtocolClasses].count > 0) {
             NSArray *defaultProtocols = urlSessionConfig.protocolClasses;
-            urlSessionConfig.protocolClasses = [@[windVaneProtocol] arrayByAddingObjectsFromArray:defaultProtocols];
+            urlSessionConfig.protocolClasses = [[WXAppConfiguration customizeProtocolClasses] arrayByAddingObjectsFromArray:defaultProtocols];
         }
         _session = [NSURLSession sessionWithConfiguration:urlSessionConfig
                                                  delegate:self
